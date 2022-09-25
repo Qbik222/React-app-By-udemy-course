@@ -14,12 +14,12 @@ import "./app.css"
         super(props)
         this.state = {
             data : [
-                {name:"John C." , salary: 450, increase: false, id: 1},
-                {name:"Zack S." , salary: 750, increase: true,id: 2},
-                {name:"Candal D." , salary: 1450, increase: false, id: 3},
+                {name:"John C." , salary: 450, increase: false, rise: false, id: 1},
+                {name:"Zack S." , salary: 750, increase: true, rise: true, id: 2},
+                {name:"Candal D." , salary: 1450, increase: false, rise: true, id: 3},
             ] 
         }
-        this.maxId = 4;
+        this.maxId = this.state.data.length + 1;
     }
 
     deleteItem = (id) =>{
@@ -35,6 +35,7 @@ import "./app.css"
             name,
             salary,
             increase: false,
+            rise: false,
             id: this.maxId++,
         }
 
@@ -46,11 +47,44 @@ import "./app.css"
         })
     }
 
+    onToggleIncrease = (id) =>{
+       this.setState(({data}) =>{
+        return {
+            data: data.map(item =>{
+                if(item.id === id){
+                    return {
+                        ...item, increase: !item.increase,
+                    }
+                }
+                return item;
+            })
+        }
+       })
+    }
+
+    onToggleRise = (id) => {
+        this.setState(({data}) =>{
+            return {
+                data: data.map(item =>{
+                    if(item.id === id){
+                        return {
+                            ...item, rise: !item.rise,
+                        }
+                    }
+                    return item;
+                })
+            }
+           })
+    }
+ 
     render(){
-        
+       const increased = this.state.data.filter(item => item.increase).length;
+       const employees = this.state.data.length 
     return(
         <div className="app">
-            <AppInfo/>
+            <AppInfo
+                employeesCounter={employees}
+                employeesRise={increased}/>
 
             <div className="search-panel">
                 <SearchPanel/>
@@ -59,7 +93,9 @@ import "./app.css"
             
             <EmployeesList 
             data={this.state.data}
-            onDelete={this.deleteItem}/>
+            onDelete={this.deleteItem}
+            onToggleIncrease={this.onToggleIncrease}
+            onToggleRise={this.onToggleRise}/>
             <EmployeesAddForm onAdd={this.addItem}/>
            
 
