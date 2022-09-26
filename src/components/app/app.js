@@ -8,16 +8,15 @@ import EmployeesAddForm from "../employees-add-form/employees-add-form";
 
 import "./app.css"
 
+// localStorage.setItem("data", localStorage.getItem("data"))
+
+// localStorage.setItem("data", JSON.stringify)
 
  class App extends Component{
     constructor(props){
         super(props)
         this.state = {
-            data : [
-                {name:"John C." , salary: 450, increase: false, rise: false, id: 1},
-                {name:"Zack S." , salary: 750, increase: true, rise: true, id: 2},
-                {name:"Candal D." , salary: 1450, increase: false, rise: true, id: 3},
-            ],
+            data: JSON.parse(localStorage.getItem("data")) || [] ,
             term: "",
             filter: "all",
         }
@@ -26,8 +25,10 @@ import "./app.css"
 
     deleteItem = (id) =>{
         this.setState(({data}) =>{
+        localStorage.setItem("data",JSON.stringify(data.filter(item => item.id !== id)))
+        const newArr =  JSON.parse(localStorage.getItem("data"))    
             return {
-                data: data.filter(item => item.id !== id)
+               data: newArr
             }
         })
     }
@@ -42,7 +43,8 @@ import "./app.css"
         }
         if( newItem.name.length > 3 && typeof newItem.salary == "number" && newItem.salary !== 0){
             this.setState(({data}) => {
-                const newArr = [...data, newItem];
+                localStorage.setItem("data",JSON.stringify([...data, newItem]));
+                const newArr = JSON.parse(localStorage.getItem("data"));
                 return {
                     data: newArr
                 }
@@ -128,7 +130,8 @@ import "./app.css"
                 <SearchPanel onUpdateSearch={this.onUpdateSearch}
                              data={data}/>
                 <AppFilter data={data}
-                           onUpdateFilter={this.onUpdateFilter} />
+                           onUpdateFilter={this.onUpdateFilter}
+                           filter={filter} />
             </div>
             
             <EmployeesList 
