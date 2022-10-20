@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/React-app-By-udemy-course/static/css/main.0ece25dc.css",
+    "main.js": "/React-app-By-udemy-course/static/js/main.790f1690.js",
+    "index.html": "/React-app-By-udemy-course/index.html",
+    "main.0ece25dc.css.map": "/React-app-By-udemy-course/static/css/main.0ece25dc.css.map",
+    "main.790f1690.js.map": "/React-app-By-udemy-course/static/js/main.790f1690.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ece25dc.css",
+    "static/js/main.790f1690.js"
+  ]
+}
